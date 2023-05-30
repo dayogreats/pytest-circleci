@@ -38,14 +38,30 @@ jobs:
           pkg-manager: pip
         
       - run:
-          name: Install dependencies
+          name: Install Requirement dependencies
           command: |
-            pip install -r requirements.txt pytest pytest-cov
+            pip install -r requirements.txt 
+
+      # - run:
+      #     name: Install Pytest dependencies
+      #     command: |
+      #       pip install -r pytest
+
+      # - run:
+      #     name: Install Coverage dependencies
+      #     command: |
+      #       pip install -m coverage
 
       - run:
           name: Run tests
           command: |
-            pytest coverage report
+            pytest 
+
+      - run:
+          name: Report
+          command: |
+            # generate a report
+            coverage report
 
       - run:
           name: Building artifacts and deploy
