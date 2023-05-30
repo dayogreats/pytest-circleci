@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            pytest
+            pytest coverage report
 
       - run:
           name: Building artifacts and deploy
