@@ -48,7 +48,7 @@ jobs:
             pytest
 
       - run:
-          name: Build artifacts and deploy
+          name: Building artifacts and deploy
           command: |
             # Make a folder
             mkdir -p "DEPLOY-$(date +%Y-%m-%d)"
@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            # Replace this command with your deployment process
+            # Deploying
             echo "I am deploying now... :) "
 
 workflows:
