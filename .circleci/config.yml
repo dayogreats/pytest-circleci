@@ -62,7 +62,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-            # Replace this command with your deployment process
+            # Deploy
             echo "I am deploying now... :) "
 
 workflows:
