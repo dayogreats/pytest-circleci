@@ -52,7 +52,7 @@ jobs:
           command: |
             # Make a folder
             mkdir -p "DEPLOY-$(date +%Y-%m-%d)"
-            cp -R "DEPLOY-$(date +%Y-%m-%d)/"
+            cp -R dist/ "DEPLOY-$(date +%Y-%m-%d)/"
 
       - run:
           name: Deploy
