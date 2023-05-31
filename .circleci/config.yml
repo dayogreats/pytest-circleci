@@ -65,7 +65,7 @@ jobs:
           name: Run report
           command: |
             # generate a report
-            coverage report 
+            coverage report -i
 
       - run:
           name: Building artifacts and deploy
