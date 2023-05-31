@@ -65,7 +65,7 @@ jobs:
           name: Run report
           command: |
             # generate a report
-            coverage report -i
+            coverage report -i calc/calculator.py
 
       - run:
           name: Building artifacts and deploy
