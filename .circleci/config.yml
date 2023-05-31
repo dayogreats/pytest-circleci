@@ -42,22 +42,22 @@ jobs:
           command: |
             pip install -r requirements.txt 
 
-      # - run:
-      #     name: Install Pytest dependencies
-      #     command: |
-      #       pip install -r pytest
+      - run:
+          name: Install Pytest dependencies
+          command: |
+            pip install -r pytest
 
-      # - run:
-      #     name: Install Coverage dependencies
-      #     command: |
-      #       pip install -m coverage
+      - run:
+          name: Install Coverage dependencies
+          command: |
+            pip install -m coverage
 
       - run:
           name: Run Pytest Tests
           command: |
             pytest 
       - run:
-          name: Run Pytest Tests
+          name: Run Unittest Tests
           command: |
             python3 -m unittest test/calculator_unittest.py 
 
@@ -65,7 +65,7 @@ jobs:
           name: Run report
           command: |
             # generate a report
-            coverage report
+            coverage report 
 
       - run:
           name: Building artifacts and deploy
