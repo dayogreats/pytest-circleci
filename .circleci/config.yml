@@ -15,13 +15,6 @@ jobs:
           command: |
             pip install -r requirements.txt 
 
-
-      # This is intentional. i decided to use requirements.txt to install pytest below
-      # - run:
-      #     name: Install Pytest dependencies
-      #     command: |
-      #       pip install -r pytest
-
       - run:
           name: Install Coverage dependencies
           command: |
