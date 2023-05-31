@@ -53,12 +53,16 @@ jobs:
       #       pip install -m coverage
 
       - run:
-          name: Run Tests
+          name: Run Pytest Tests
           command: |
             pytest 
+      - run:
+          name: Run Pytest Tests
+          command: |
+            python3 -m unittest test/calculator_unittest.py 
 
       - run:
-          name: Report
+          name: Run report
           command: |
             # generate a report
             coverage report
