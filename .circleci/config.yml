@@ -42,15 +42,15 @@ jobs:
           command: |
             pip install -r requirements.txt 
 
-      - run:
-          name: Install Pytest dependencies
-          command: |
-            pip install -r pytest
+      # - run:
+      #     name: Install Pytest dependencies
+      #     command: |
+      #       pip install -r pytest
 
-      - run:
-          name: Install Coverage dependencies
-          command: |
-            pip install -m coverage
+      # - run:
+      #     name: Install Coverage dependencies
+      #     command: |
+      #       pip install -m coverage
 
       - run:
           name: Run Pytest Tests
