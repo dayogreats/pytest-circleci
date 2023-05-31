@@ -47,10 +47,10 @@ jobs:
       #     command: |
       #       pip install -r pytest
 
-      # - run:
-      #     name: Install Coverage dependencies
-      #     command: |
-      #       pip install -m coverage
+      - run:
+          name: Install Coverage dependencies
+          command: |
+            python3 -m pip install coverage
 
       - run:
           name: Run Pytest Tests
