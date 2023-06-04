@@ -4,49 +4,134 @@ orbs:
 jobs:
   build-and-deploy:
     executor: python/default
-
+    working_directory: /dist/"DEPLOY-$(date +%Y-%m-%d)/"
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-        
+      
+      # install dependcies in the requirement.txt using pip as a package manager
       - run:
           name: Install Requirement dependencies
           command: |
             pip install -r requirements.txt 
 
-      - run:
+      
+      - run:  # install coverage from the script here, not from requirement.txt - an alternative
           name: Install Coverage dependencies
           command: |
             python3 -m pip install coverage
 
-      - run:
+      
+      - run:  # Run pytest testing script
           name: Run Pytest Tests
           command: |
             pytest 
-      - run:
+
+      
+      - run:  # Run unittest testing script
           name: Run Unittest Tests
           command: |
             python3 -m unittest test/calculator_unittest.py 
 
-      - run:
+      - run: # Install the AWS CLI if it is not already included in the docker image
+            name: Install awscli
+            command: sudo pip install awscli
+
+      
+      - run:  # Run coverage testing script
           name: Generating coverage report
           command: |
             # generate a report
             coverage report -i calc/calculator.py
 
-      - run:
+      
+      - run:  # Make a directory and build artifacts
           name: Building artifacts and deploy
           command: |
             # Make a folder
             mkdir -p "DEPLOY-$(date +%Y-%m-%d)"
-            cp -R dist/ "DEPLOY-$(date +%Y-%m-%d)/"
+
+            # Copy the dist folder to the new folder
+            cp -R dist/"DEPLOY-$(date +%Y-%m-%d)/"
+
+      
+    
+      - setup_remote_docker
+
+      - run: # Install docker depedencies inclusing aws
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=9.0.0-r1
+            pip install \
+              docker-compose==1.12.0 \
+              awscli==1.11.76
+
+
+      
+      - run: # Docker build
+          name: Build application Docker image
+          command: |
+            docker build -t circleci-docker-aws .
+
+      # - run:
+      #     name: Save Docker image layer cache
+      #     command: |
+      #       mkdir -p /caches
+      #       docker save -o /caches/app.tar app
+
+
+      # - save_cache:
+      #     key: v1-{{ .Branch }}-{{ epoch }}
+      #     paths:
+      #       - /caches/app.tar
 
       - run:
-          name: Deploy
+          name: Run docker tests
           command: |
-            # Deploying spinning now
-            echo "I am deploying now... :) "
+            docker-compose -f ./docker-compose.test.yml up
+
+      # - deploy:
+      #     name: Push application Docker image
+      #     command: |
+      #       if [ "${CIRCLE_BRANCH}" == "main" ]; then
+      #         login="$(aws ecr get-login)"
+      #         ${login}
+      #         docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+      #         docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+      #       fi
+
+
+
+
+      # # Build the Docker image
+      # - setup_remote_docker:
+      #     version: 22.0.0
+
+      # - run:
+      #     name: Build Docker image
+      #     command: docker build -t dayogreats/your-repo:tag .
+
+      # # Log in to Docker Hub
+      # - run:
+      #     name: Log in to Docker Hub
+      #     command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+      # # Push the Docker image to Docker Hub
+      # - run:
+      #     name: Push Docker image to Docker Hub
+      #     command: docker push your-username/your-repo:tag
+
+
+      # - run: # Deploy heads up message.
+      #     name: Deploy message
+      #     command: |
+      #       echo "Now deploying... :) "
+          
+      # - run: # Deploy to ec2 using the awscli command
+      #       name: Deploy to S3
+      #       command: aws ec2 sync <path/to/bucket> <s3://location/in/S3-to-deploy-to>
 
 workflows:
   version: 2
@@ -56,5 +141,5 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - main  # build when commit / push to main branch
 
