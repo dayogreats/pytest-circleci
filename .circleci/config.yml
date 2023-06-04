@@ -4,7 +4,7 @@ orbs:
 jobs:
   build-and-deploy:
     executor: python/default
-    working_directory: /dist/"DEPLOY-$(date +%Y-%m-%d)/"
+    working_directory: dist/"DEPLOY-$(date +%Y-%m-%d)/"
     steps:
       - checkout
       - python/install-packages:
