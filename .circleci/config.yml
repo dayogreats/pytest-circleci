@@ -1,9 +1,10 @@
 version: 2.1
 orbs:
   python: circleci/python@2.1.1
+
 jobs:
   working_directory: /dist/DEPLOY-$(date +%Y-%m-%d)/
-  build-and-deploy:
+  build:
     executor: python/default
     steps:
       - checkout
@@ -50,12 +51,6 @@ jobs:
             coverage report -i calc/calculator.py
 
       
-      - run:  # Make a working directory artifacts
-          name: Building artifacts and deploy
-          command: | 
-            mkdir -p dist/"DEPLOY-$(date +%Y-%m-%d)/" # Make a folder and subfolder with -p option
-           
-            cp -R ./ dist/"DEPLOY-$(date +%Y-%m-%d)"   # Copy the dist folder to the new folder
 
 
       - run: # Docker build
@@ -120,4 +115,10 @@ workflows:
             branches:
               only:
                 - main  # build when commit / push to main branch
+
+
+
+
+
+# /////////////
 
