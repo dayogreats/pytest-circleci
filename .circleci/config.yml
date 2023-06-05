@@ -3,7 +3,7 @@ orbs:
   python: circleci/python@2.1.1
 
 jobs:
-  working_directory: /dist/DEPLOY-$(date +%Y-%m-%d)/
+  working_directory: /DEPLOY-$(date +%Y-%m-%d)/
   build-and-deploy:
     executor: python/default
     steps:
@@ -18,16 +18,10 @@ jobs:
             pip install -r requirements.txt 
 
       
-      - run:  # install coverage from the script here, not from requirement.txt - an alternative
-          name: Install Coverage dependencies
-          command: |
-            python3 -m pip install coverage
-
-      
       - run:  # Run pytest testing script
           name: Run Pytest Tests
           command: |
-            pytest 
+            pytest  
 
       
       - run:  # Run unittest testing script
@@ -35,33 +29,34 @@ jobs:
           command: |
             python3 -m unittest test/calculator_unittest.py 
 
-      - run: # check aws version
+      - run: # check aws and pip version
             name: Check  aws version 
-            command: aws --version \
+            command: |
+              aws --version \
+              && pip --version
             # && aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID \
 
-      - run: # check pip version
-            name: Check  pip version 
-            command: pip --version 
+      # - run: # check pip version
+      #       name: Check  pip version 
+      #       command: pip --version 
 
       
       - run:  # Run coverage testing script
           name: Generating coverage report
           command: |
-            # generate a report
             coverage report -i calc/calculator.py
 
       - run: # Docker build image: circleci-docker-aws-tag
           name: Build application Docker image
           command: |
-            docker --version  # build -t dayogreats/circleci-docker-aws-tag .
+            docker --version  \
+            && build -t dayogreats/circleci-docker-aws:v1 .
 
-      
 
-      - run:
-          name: Run docker check and tests
-          command: |
-            docker-compose -f ./docker-compose.test.yml up
+      # - run:
+      #     name: Run docker check and tests
+      #     command: |
+      #       docker-compose -f ./docker-compose.test.yml up
 
       # - deploy:
       #     name: Push application Docker image
