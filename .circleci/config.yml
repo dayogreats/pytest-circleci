@@ -35,8 +35,8 @@ jobs:
             python3 -m unittest test/calculator_unittest.py 
 
       - run: # Install the AWS CLI if it is not already included in the docker image
-            name: Install awscli
-            command: sudo pip install awscli
+            name: Check installed aws version 
+            command: aws --version
 
       
       - run:  # Run coverage testing script
@@ -57,7 +57,7 @@ jobs:
 
       
     
-      - setup_remote_docker
+     
 
       - run: # Install docker depedencies inclusing aws
           name: Install dependencies
