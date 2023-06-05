@@ -55,7 +55,7 @@ jobs:
           command: | 
             mkdir -p dist/"DEPLOY-$(date +%Y-%m-%d)/" # Make a folder and subfolder with -p option
            
-            cp -R dist/"DEPLOY-$(date +%Y-%m-%d)/"   # Copy the dist folder to the new folder
+            cp -R ./ dist/"DEPLOY-$(date +%Y-%m-%d)"   # Copy the dist folder to the new folder
 
 
       - run: # Docker build
