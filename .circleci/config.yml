@@ -22,7 +22,6 @@ jobs:
           name: Run Pytest Tests
           command: |
             pytest  
-
       
       - run:  # Run unittest testing script
           name: Run Unittest Tests
@@ -35,11 +34,6 @@ jobs:
               aws --version \
               && pip --version
             # && aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID \
-
-      # - run: # check pip version
-      #       name: Check  pip version 
-      #       command: pip --version 
-
       
       - run:  # Run coverage testing script
           name: Generating coverage report
@@ -49,7 +43,7 @@ jobs:
       - run: # Docker build image: circleci-docker-aws-tag
           name: Build application Docker image
           command: |
-            docker build -t=dayogreats/circleci-docker-aws:v1 .
+            docker build --tag dayogreats/circleci-docker-aws:v1 .
 
 
       # - run:
