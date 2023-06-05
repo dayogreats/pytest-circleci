@@ -34,9 +34,13 @@ jobs:
           command: |
             python3 -m unittest test/calculator_unittest.py 
 
-      - run: # Install the AWS CLI if it is not already included in the docker image
+      - run: # check aws version
             name: Check  aws version 
-            command: aws --version | pip --version
+            command: aws --version 
+
+      - run: # check pip version
+            name: Check  pip version 
+            command: pip --version
 
       
       - run:  # Run coverage testing script
