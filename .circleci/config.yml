@@ -49,8 +49,7 @@ jobs:
       - run: # Docker build image: circleci-docker-aws-tag
           name: Build application Docker image
           command: |
-            docker --version  \
-            && build -t dayogreats/circleci-docker-aws:v1 .
+            docker build -t=dayogreats/circleci-docker-aws:v1 .
 
 
       # - run:
