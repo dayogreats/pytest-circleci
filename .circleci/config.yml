@@ -4,7 +4,7 @@ orbs:
 
 jobs:
   working_directory: /dist/DEPLOY-$(date +%Y-%m-%d)/
-  build:
+  build-and-build:
     executor: python/default
     steps:
       - checkout
@@ -120,5 +120,5 @@ workflows:
 
 
 
-# /////////////
+
 
