@@ -35,8 +35,8 @@ jobs:
             python3 -m unittest test/calculator_unittest.py 
 
       - run: # Install the AWS CLI if it is not already included in the docker image
-            name: Check installed aws version 
-            command: aws --version
+            name: Check  aws version 
+            command: aws --version | pip --version
 
       
       - run:  # Run coverage testing script
@@ -46,35 +46,23 @@ jobs:
             coverage report -i calc/calculator.py
 
       
-      - run:  # Make a directory and build artifacts
+      - run:  # Make a working directory artifacts
           name: Building artifacts and deploy
-          command: |
-            # Make a folder
-            mkdir -p "DEPLOY-$(date +%Y-%m-%d)"
+          command: | 
+            mkdir -p dist/"DEPLOY-$(date +%Y-%m-%d)/" # Make a folder and subfolder with -p option
+           
+            cp -R dist/"DEPLOY-$(date +%Y-%m-%d)/"   # Copy the dist folder to the new folder
 
-            # Copy the dist folder to the new folder
-            cp -R dist/"DEPLOY-$(date +%Y-%m-%d)/"
-
-      
-    
-     
-
-      - run: # Install docker depedencies inclusing aws
-          name: Install dependencies
-          command: |
-            apk add --no-cache \
-              docker-compose==1.12.0 \
-              awscli==1.11.76
 
       - run: # Docker build
           name: Build application Docker image
           command: |
-            docker build -t circleci-docker-aws .
+            docker build -t circleci-docker-aws-tag .
 
       
 
       - run:
-          name: Run docker tests
+          name: Run docker check and tests
           command: |
             docker-compose -f ./docker-compose.test.yml up
 
