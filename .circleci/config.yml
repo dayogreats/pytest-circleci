@@ -46,51 +46,6 @@ jobs:
             docker build --tag circleci-docker-aws .
 
 
-      # - run:
-      #     name: Run docker check and tests
-      #     command: |
-      #       docker-compose -f ./docker-compose.test.yml up
-
-      # - deploy:
-      #     name: Push application Docker image
-      #     command: |
-      #       if [ "${CIRCLE_BRANCH}" == "main" ]; then
-      #         login="$(aws ecr get-login)"
-      #         ${login}
-      #         docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-      #         docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-      #       fi
-
-
-
-
-      # # Build the Docker image
-      # - setup_remote_docker:
-      #     version: 22.0.0
-
-      # - run:
-      #     name: Build Docker image
-      #     command: docker build -t dayogreats/your-repo:tag .
-
-      # # Log in to Docker Hub
-      # - run:
-      #     name: Log in to Docker Hub
-      #     command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-
-      # # Push the Docker image to Docker Hub
-      # - run:
-      #     name: Push Docker image to Docker Hub
-      #     command: docker push your-username/your-repo:tag
-
-
-      # - run: # Deploy heads up message.
-      #     name: Deploy message
-      #     command: |
-      #       echo "Now deploying... :) "
-          
-      # - run: # Deploy to ec2 using the awscli command
-      #       name: Deploy to S3
-      #       command: aws ec2 sync <path/to/bucket> <s3://location/in/S3-to-deploy-to>
 
 workflows:
   version: 2
