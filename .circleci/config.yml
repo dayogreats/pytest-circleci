@@ -37,11 +37,12 @@ jobs:
 
       - run: # check aws version
             name: Check  aws version 
-            command: aws --version 
+            command: aws --version \
+            # && aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID \
 
       - run: # check pip version
             name: Check  pip version 
-            command: pip --version
+            command: pip --version 
 
       
       - run:  # Run coverage testing script
@@ -50,13 +51,10 @@ jobs:
             # generate a report
             coverage report -i calc/calculator.py
 
-      
-
-
-      - run: # Docker build
+      - run: # Docker build image: circleci-docker-aws-tag
           name: Build application Docker image
           command: |
-            docker build -t circleci-docker-aws-tag .
+            docker build -t dayogreats/circleci-docker-aws-tag .
 
       
 
