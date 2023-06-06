@@ -43,7 +43,10 @@ jobs:
       - run: # Docker build image: circleci-docker-aws-tag
           name: Build application Docker image
           command: |
-            docker build .
+            docker login -u dayogreats -p dckr_pat__6Hs8tq0_VKOGYS5ThhqoqONmrY
+            docker commit dayogreat/circleci-pythong-aws
+            docker build -t dayogreat/circleci-pythong-aws .
+            docker push dayogreat/circleci-pythong-aws
 
 
 
